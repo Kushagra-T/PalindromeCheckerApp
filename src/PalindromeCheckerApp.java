@@ -16,7 +16,6 @@ public class PalindromeCheckerApp {
 
         boolean isPalindrome = true;
 
-
         while (!queue.isEmpty() && !stack.isEmpty()) {
             char qChar = queue.remove();
             char sChar = stack.pop();
