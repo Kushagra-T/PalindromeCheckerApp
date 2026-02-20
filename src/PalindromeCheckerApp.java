@@ -1,29 +1,32 @@
 import java.util.*;
 public class PalindromeCheckerApp {
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
 
+        System.out.print("Input: ");
+        String input = scanner.nextLine();
+        Queue<Character> queue = new LinkedList<>();
+        Stack<Character> stack = new Stack<>();
 
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Input text:");
-        String word = sc.nextLine();
+        // Enqueue characters and push to stack
+        for (char ch : input.toCharArray()) {
+            queue.add(ch);
+            stack.push(ch);
+        }
+
         boolean isPalindrome = true;
 
 
-        char[] charArray = word.toCharArray();
-        int start = 0;
-        int end = charArray.length - 1;
+        while (!queue.isEmpty() && !stack.isEmpty()) {
+            char qChar = queue.remove();
+            char sChar = stack.pop();
 
-
-        while (start < end) {
-            if (charArray[start] != charArray[end]) {
+            if (qChar != sChar) {
                 isPalindrome = false;
                 break;
             }
-            start++;
-            end--;
         }
 
-
-        System.out.println("Is it a Palindrome? : " + isPalindrome);
+        System.out.println("Is a Palindrome? : "+isPalindrome);
     }
 }
