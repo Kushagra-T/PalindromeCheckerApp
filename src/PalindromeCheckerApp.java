@@ -1,32 +1,26 @@
-import java.util.*;
 public class PalindromeCheckerApp {
+    public static boolean isPalindromeRecursive(String str, int start, int end) {
+
+        if (start >= end) {
+            return true;
+        }
+
+        if (str.charAt(start) != str.charAt(end)) {
+            return false;
+        }
+
+        return isPalindromeRecursive(str, start + 1, end - 1);
+    }
+
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        java.util.Scanner sc = new java.util.Scanner(System.in);
+        System.out.print("Enter a string: ");
+        String input = sc.nextLine();
 
-        System.out.print("Input: ");
-        String input = scanner.nextLine();
-        Queue<Character> queue = new LinkedList<>();
-        Stack<Character> stack = new Stack<>();
-
-
-        for (char ch : input.toCharArray()) {
-            queue.add(ch);
-            stack.push(ch);
+        if (isPalindromeRecursive(input, 0, input.length() - 1)) {
+            System.out.println("The string \"" + input + "\" is a palindrome.");
+        } else {
+            System.out.println("The string \"" + input + "\" is NOT a palindrome.");
         }
-
-        boolean isPalindrome = true;
-
-
-        while (!queue.isEmpty() && !stack.isEmpty()) {
-            char qChar = queue.remove();
-            char sChar = stack.pop();
-
-            if (qChar != sChar) {
-                isPalindrome = false;
-                break;
-            }
-        }
-
-        System.out.println("Is a Palindrome? : "+isPalindrome);
     }
 }
