@@ -8,13 +8,14 @@ public class PalindromeCheckerApp {
         Queue<Character> queue = new LinkedList<>();
         Stack<Character> stack = new Stack<>();
 
-        // Enqueue characters and push to stack
+
         for (char ch : input.toCharArray()) {
             queue.add(ch);
             stack.push(ch);
         }
 
         boolean isPalindrome = true;
+
 
         while (!queue.isEmpty() && !stack.isEmpty()) {
             char qChar = queue.remove();
@@ -27,5 +28,5 @@ public class PalindromeCheckerApp {
         }
 
         System.out.println("Is a Palindrome? : "+isPalindrome);
-        }
+    }
 }
