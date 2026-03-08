@@ -1,15 +1,21 @@
 public class PalindromeCheckerApp {
-    public static boolean isPalindromeRecursive(String str, int start, int end) {
 
-        if (start >= end) {
-            return true;
+    public static String normalizeString(String str) {
+        return str.replaceAll("\\s+", "").toLowerCase();
+    }
+
+    public static boolean isPalindrome(String str) {
+        int start = 0;
+        int end = str.length() - 1;
+
+        while (start < end) {
+            if (str.charAt(start) != str.charAt(end)) {
+                return false;
+            }
+            start++;
+            end--;
         }
-
-        if (str.charAt(start) != str.charAt(end)) {
-            return false;
-        }
-
-        return isPalindromeRecursive(str, start + 1, end - 1);
+        return true;
     }
 
     public static void main(String[] args) {
@@ -17,10 +23,12 @@ public class PalindromeCheckerApp {
         System.out.print("Enter a string: ");
         String input = sc.nextLine();
 
-        if (isPalindromeRecursive(input, 0, input.length() - 1)) {
-            System.out.println("The string \"" + input + "\" is a palindrome.");
+        String normalized = normalizeString(input);
+
+        if (isPalindrome(normalized)) {
+            System.out.println("The string \"" + input + "\" is a palindrome (ignoring case and spaces).");
         } else {
-            System.out.println("The string \"" + input + "\" is NOT a palindrome.");
+            System.out.println("The string \"" + input + "\" is NOT a palindrome (ignoring case and spaces).");
         }
     }
 }
