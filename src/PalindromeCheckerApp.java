@@ -3,31 +3,30 @@ public class PalindromeCheckerApp {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-
         System.out.print("Input: ");
         String input = scanner.nextLine();
+        Queue<Character> queue = new LinkedList<>();
+        Stack<Character> stack = new Stack<>();
 
-        String processedInput = input.replaceAll("\\s+", "").toLowerCase();
 
-        Deque<Character> deque = new ArrayDeque<>();
-
-        for (int i = 0; i < processedInput.length(); i++) {
-            deque.addLast(processedInput.charAt(i));
+        for (char ch : input.toCharArray()) {
+            queue.add(ch);
+            stack.push(ch);
         }
 
         boolean isPalindrome = true;
 
-        while (deque.size() > 1) {
 
-            char front = deque.removeFirst();
-            char rear = deque.removeLast();
+        while (!queue.isEmpty() && !stack.isEmpty()) {
+            char qChar = queue.remove();
+            char sChar = stack.pop();
 
-            if (front != rear) {
+            if (qChar != sChar) {
                 isPalindrome = false;
                 break;
             }
         }
-        System.out.println("Is a Palindrome? : "+isPalindrome);
 
+        System.out.println("Is a Palindrome? : "+isPalindrome);
     }
 }
