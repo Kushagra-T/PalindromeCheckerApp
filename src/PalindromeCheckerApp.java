@@ -1,15 +1,12 @@
-public class PalindromeCheckerApp {
+class PalindromeChecker {
+    public boolean checkPalindrome(String str) {
+        String normalized = str.replaceAll("\\s+", "").toLowerCase();
 
-    public static String normalizeString(String str) {
-        return str.replaceAll("\\s+", "").toLowerCase();
-    }
-
-    public static boolean isPalindrome(String str) {
         int start = 0;
-        int end = str.length() - 1;
+        int end = normalized.length() - 1;
 
         while (start < end) {
-            if (str.charAt(start) != str.charAt(end)) {
+            if (normalized.charAt(start) != normalized.charAt(end)) {
                 return false;
             }
             start++;
@@ -17,18 +14,20 @@ public class PalindromeCheckerApp {
         }
         return true;
     }
+}
 
+public class PalindromeCheckerApp {
     public static void main(String[] args) {
         java.util.Scanner sc = new java.util.Scanner(System.in);
         System.out.print("Enter a string: ");
         String input = sc.nextLine();
 
-        String normalized = normalizeString(input);
+        PalindromeChecker checker = new PalindromeChecker();
 
-        if (isPalindrome(normalized)) {
-            System.out.println("The string \"" + input + "\" is a palindrome (ignoring case and spaces).");
+        if (checker.checkPalindrome(input)) {
+            System.out.println("The string \"" + input + "\" is a palindrome.");
         } else {
-            System.out.println("The string \"" + input + "\" is NOT a palindrome (ignoring case and spaces).");
+            System.out.println("The string \"" + input + "\" is NOT a palindrome.");
         }
     }
 }
