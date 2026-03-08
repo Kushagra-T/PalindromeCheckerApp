@@ -1,31 +1,34 @@
-import java.util.*;
 public class PalindromeCheckerApp {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Input: ");
-        String input = scanner.nextLine();
-        Queue<Character> queue = new LinkedList<>();
-        Stack<Character> stack = new Stack<>();
+    public static String normalizeString(String str) {
+        return str.replaceAll("\\s+", "").toLowerCase();
+    }
 
-        // Enqueue characters and push to stack
-        for (char ch : input.toCharArray()) {
-            queue.add(ch);
-            stack.push(ch);
-        }
+    public static boolean isPalindrome(String str) {
+        int start = 0;
+        int end = str.length() - 1;
 
-        boolean isPalindrome = true;
-
-        while (!queue.isEmpty() && !stack.isEmpty()) {
-            char qChar = queue.remove();
-            char sChar = stack.pop();
-
-            if (qChar != sChar) {
-                isPalindrome = false;
-                break;
+        while (start < end) {
+            if (str.charAt(start) != str.charAt(end)) {
+                return false;
             }
+            start++;
+            end--;
         }
+        return true;
+    }
 
-        System.out.println("Is a Palindrome? : "+isPalindrome);
+    public static void main(String[] args) {
+        java.util.Scanner sc = new java.util.Scanner(System.in);
+        System.out.print("Enter a string: ");
+        String input = sc.nextLine();
+
+        String normalized = normalizeString(input);
+
+        if (isPalindrome(normalized)) {
+            System.out.println("The string \"" + input + "\" is a palindrome (ignoring case and spaces).");
+        } else {
+            System.out.println("The string \"" + input + "\" is NOT a palindrome (ignoring case and spaces).");
         }
+    }
 }
