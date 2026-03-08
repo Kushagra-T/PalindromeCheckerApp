@@ -1,34 +1,31 @@
 interface PalindromeStrategy {
     boolean checkPalindrome(String str);
 }
+
 class StackStrategy implements PalindromeStrategy {
     @Override
     public boolean checkPalindrome(String str) {
         String normalized = str.replaceAll("\\s+", "").toLowerCase();
         java.util.Stack<Character> stack = new java.util.Stack<>();
-
         for (char c : normalized.toCharArray()) {
             stack.push(c);
         }
-
         StringBuilder reversed = new StringBuilder();
         while (!stack.isEmpty()) {
             reversed.append(stack.pop());
         }
-
         return normalized.equals(reversed.toString());
     }
 }
+
 class DequeStrategy implements PalindromeStrategy {
     @Override
     public boolean checkPalindrome(String str) {
         String normalized = str.replaceAll("\\s+", "").toLowerCase();
         java.util.Deque<Character> deque = new java.util.ArrayDeque<>();
-
         for (char c : normalized.toCharArray()) {
             deque.addLast(c);
         }
-
         while (deque.size() > 1) {
             if (deque.removeFirst() != deque.removeLast()) {
                 return false;
@@ -37,15 +34,18 @@ class DequeStrategy implements PalindromeStrategy {
         return true;
     }
 }
-class PalindromeChecker {
-    private PalindromeStrategy strategy;
 
-    public PalindromeChecker(PalindromeStrategy strategy) {
-        this.strategy = strategy;
+class RecursiveStrategy implements PalindromeStrategy {
+    @Override
+    public boolean checkPalindrome(String str) {
+        String normalized = str.replaceAll("\\s+", "").toLowerCase();
+        return isPalindromeRecursive(normalized, 0, normalized.length() - 1);
     }
 
-    public boolean check(String str) {
-        return strategy.checkPalindrome(str);
+    private boolean isPalindromeRecursive(String str, int start, int end) {
+        if (start >= end) return true;
+        if (str.charAt(start) != str.charAt(end)) return false;
+        return isPalindromeRecursive(str, start + 1, end - 1);
     }
 }
 
@@ -55,20 +55,23 @@ public class PalindromeCheckerApp {
         System.out.print("Enter a string: ");
         String input = sc.nextLine();
 
-        System.out.println("Choose strategy: 1 for Stack, 2 for Deque");
-        int choice = sc.nextInt();
+        PalindromeStrategy[] strategies = {
+                new StackStrategy(),
+                new DequeStrategy(),
+                new RecursiveStrategy()
+        };
 
-        PalindromeChecker checker;
-        if (choice == 1) {
-            checker = new PalindromeChecker(new StackStrategy());
-        } else {
-            checker = new PalindromeChecker(new DequeStrategy());
-        }
+        String[] names = {"StackStrategy", "DequeStrategy", "RecursiveStrategy"};
 
-        if (checker.check(input)) {
-            System.out.println("The string \"" + input + "\" is a palindrome.");
-        } else {
-            System.out.println("The string \"" + input + "\" is NOT a palindrome.");
+        for (int i = 0; i < strategies.length; i++) {
+            long startTime = System.nanoTime();
+            boolean result = strategies[i].checkPalindrome(input);
+            long endTime = System.nanoTime();
+            long duration = endTime - startTime;
+
+            System.out.println(names[i] + ": " +
+                    (result ? "Palindrome" : "Not Palindrome") +
+                    " | Time taken: " + duration + " ns");
         }
     }
 }
